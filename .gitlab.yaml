@@ -1,0 +1,14 @@
+variables :
+  MAVEN_OPTS : "-Dmaven.repo.local=$CI_PROJECT_DIR/.m2/repo "
+cache :
+  paths :
+    - .m2/repo
+runtestsandprogram :
+  image : maven :3.3.9 - jdk -8
+  script :
+    - cd primes; mvn test exec:java -Dexec.mainClass="de.nordakademie.Main";
+  artifacts :
+    name : "${CI_COMMIT_REF_NAME}_${CI_JOB_ID}_primzahlen"
+    expire_in : 8 mos
+    paths :
+      - "primes/out.txt"
